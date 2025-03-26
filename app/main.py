@@ -1,7 +1,5 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, WebSocket, HTTPException
 from pydantic import BaseModel
-import json
 
 app = FastAPI()
 
