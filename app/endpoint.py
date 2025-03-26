@@ -6,12 +6,13 @@ from app.main import manager
 app = FastAPI()
 
 # Webhook endpoint for github
-@app.post("webhook/github")
+# Webhook endpoint for GitHub (FIXED VERSION)
+@app.post("/webhook/github")  # ← Added missing forward slash
 async def github_webhook(request: Request):
     payload = await request.json()
     event_type = request.headers.get("X-GitHub-Event", "ping")
-
-        # Broadcast to all WebSocket clients
+    
+    # Broadcast to all WebSocket clients (keep this for real-time updates)
     await manager.broadcast(
         json.dumps({
             "event": "github_webhook",
@@ -19,7 +20,8 @@ async def github_webhook(request: Request):
             "data": payload
         })
     )
-
+    
+    print("GitHub Webhook Received:", payload)  # Debug log (optional)
     return {"status": "success", "event": event_type}
 
 
